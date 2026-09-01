@@ -1,0 +1,67 @@
+:host {
+	display: block;
+	min-height: 100vh;
+}
+
+.login-page {
+	min-height: 100vh;
+	display: grid;
+	grid-template-columns: minmax(0, 1.15fr) minmax(360px, 0.85fr);
+	background: #f5f4ef;
+}
+
+.login-intro {
+	position: relative;
+	overflow: hidden;
+	padding: clamp(2rem, 7vw, 7rem);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	background: #173f3a;
+	color: #f5f4ef;
+}
+
+.login-intro::after {
+	content: '';
+	position: absolute;
+	width: 28rem;
+	height: 28rem;
+	right: -10rem;
+	bottom: -12rem;
+	border: 1px solid rgba(245, 244, 239, 0.3);
+	border-radius: 50%;
+	box-shadow: 0 0 0 3rem rgba(245, 244, 239, 0.06), 0 0 0 6rem rgba(245, 244, 239, 0.04);
+}
+
+.eyebrow, .panel-kicker {
+	font: 700 0.72rem/1.2 'Trebuchet MS', sans-serif;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+}
+
+.login-intro h1 {
+	max-width: 11ch;
+	margin: 1.5rem 0;
+	font: 500 clamp(3rem, 6vw, 6.5rem)/0.94 Georgia, serif;
+	letter-spacing: 0;
+}
+
+.login-intro p { max-width: 29rem; margin: 0; color: #b9d2c7; font-size: 1.05rem; }
+.intro-mark { margin-top: 4rem; font: 300 8rem/0.5 Georgia, serif; color: #e9bd61; }
+
+.login-panel { padding: clamp(2rem, 7vw, 7rem) clamp(1.5rem, 6vw, 6rem); display: flex; flex-direction: column; justify-content: center; }
+.panel-heading { margin-bottom: 2rem; }
+.panel-kicker { color: #b25b42; }
+.panel-heading h2 { margin: 0.7rem 0 0.5rem; color: #173f3a; font: 500 3rem/1 Georgia, serif; }
+.panel-heading p { margin: 0; color: #65716c; }
+form { display: grid; gap: 0.8rem; }
+.submit-button { min-height: 3.25rem; justify-content: space-between; background: #b25b42 !important; color: white !important; }
+.form-error { display: flex; align-items: center; gap: 0.4rem; margin: 0; color: #b3261e; font-size: 0.85rem; }
+
+@media (max-width: 720px) {
+	.login-page { grid-template-columns: 1fr; }
+	.login-intro { min-height: 38vh; padding: 2.5rem 1.5rem; justify-content: flex-end; }
+	.login-intro h1 { margin: 1rem 0; font-size: 3.5rem; }
+	.intro-mark { display: none; }
+	.login-panel { padding: 3rem 1.5rem 4rem; }
+}

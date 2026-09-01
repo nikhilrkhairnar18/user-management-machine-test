@@ -1,0 +1,29 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "username": "johndoe",
+      "email": "john@example.com",
+      "job-role": "tech"
+    },
+    {
+      "id": "2",
+      "username": "janedoe",
+      "email": "jane@example.com",
+      "job-role": "qa"
+    },
+    {
+      "id": "3",
+      "username": "mike",
+      "email": "mike@example.com",
+      "job-role": "gd"
+    },
+    {
+      "username": "nikhil",
+      "email": "nikhil@gmail.com",
+      "job-role": "id",
+      "id": "8Vof0R__Ygs"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

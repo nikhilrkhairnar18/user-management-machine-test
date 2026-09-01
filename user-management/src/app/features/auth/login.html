@@ -1,0 +1,42 @@
+<main class="login-page">
+	<section class="login-intro" aria-labelledby="welcome-title">
+		<span class="eyebrow">NORTHSTAR / ADMIN</span>
+		<h1 id="welcome-title">Keep your people moving.</h1>
+		<p>A calm, focused workspace for the people behind your product.</p>
+		<div class="intro-mark" aria-hidden="true">+</div>
+	</section>
+
+	<section class="login-panel" aria-labelledby="sign-in-title">
+		<div class="panel-heading">
+			<span class="panel-kicker">Workspace access</span>
+			<h2 id="sign-in-title">Sign in</h2>
+			<p>Use any username and password to enter the demo.</p>
+		</div>
+
+		<form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+			<mat-form-field appearance="outline">
+				<mat-label>Username</mat-label>
+				<input matInput formControlName="username" autocomplete="username" />
+				@if (form.controls.username.hasError('required') && form.controls.username.touched) {
+					<mat-error>Username is required.</mat-error>
+				}
+			</mat-form-field>
+
+			<mat-form-field appearance="outline">
+				<mat-label>Password</mat-label>
+				<input matInput type="password" formControlName="password" autocomplete="current-password" />
+				@if (form.controls.password.hasError('required') && form.controls.password.touched) {
+					<mat-error>Password is required.</mat-error>
+				}
+			</mat-form-field>
+
+			@if (error$ | async; as error) {
+				<p class="form-error" role="alert"><mat-icon aria-hidden="true">error_outline</mat-icon>{{ error }}</p>
+			}
+
+			<button mat-flat-button class="submit-button" type="submit">
+				Continue <mat-icon aria-hidden="true">arrow_forward</mat-icon>
+			</button>
+		</form>
+	</section>
+</main>

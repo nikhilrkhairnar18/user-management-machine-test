@@ -1,0 +1,63 @@
+<main class="dashboard">
+  <header class="topbar">
+    <a class="brand" routerLink="/users" aria-label="Northstar home"><span>+</span> NORTHSTAR</a>
+    <div class="topbar-actions">
+      @if (username$ | async; as username) { <span class="signed-in">Signed in as <strong>{{ username }}</strong></span> }
+      <button mat-button type="button" (click)="logout()">Sign out <mat-icon aria-hidden="true">logout</mat-icon></button>
+    </div>
+  </header>
+
+  <section class="content" aria-labelledby="page-title">
+    <div class="heading-row">
+      <div>
+        <span class="eyebrow">People directory</span>
+        <h1 id="page-title">Users</h1>
+        <p>Manage the people who have access to your workspace.</p>
+      </div>
+      <div class="count" aria-label="User count"><strong>{{ (users$ | async)?.length || 0 }}</strong><span>members</span></div>
+    </div>
+
+    <div class="workspace">
+      <section class="user-list" aria-labelledby="list-title">
+        <div class="section-heading"><h2 id="list-title">All users</h2><span class="list-note">Live directory</span></div>
+        @if (loading$ | async) { <p class="status">Loading directory...</p> }
+        @if (error$ | async; as error) { <p class="status error" role="alert">{{ error }}</p> }
+        @if (!(loading$ | async) && (users$ | async)?.length === 0) { <p class="status">No users yet. Add your first member.</p> }
+        @if ((users$ | async); as users) {
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th scope="col">Name</th><th scope="col">Email</th><th scope="col">Role</th><th scope="col"><span class="sr-only">Actions</span></th></tr></thead>
+              <tbody>
+                @for (user of users; track user.id) {
+                  <tr>
+                    <td><div class="user-name"><span class="avatar">{{ user.username.charAt(0).toUpperCase() }}</span><strong>{{ user.username }}</strong></div></td>
+                    <td data-label="Email">{{ user.email }}</td>
+                    <td data-label="Role"><span class="role">{{ user['job-role'] }}</span></td>
+                    <td class="actions"><button mat-icon-button type="button" (click)="edit(user)" [attr.aria-label]="'Edit ' + user.username"><mat-icon>edit</mat-icon></button><button mat-icon-button type="button" (click)="remove(user)" [attr.aria-label]="'Delete ' + user.username"><mat-icon>delete_outline</mat-icon></button></td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+      </section>
+
+      <aside class="editor" aria-labelledby="editor-title">
+        <span class="eyebrow">{{ editingId === null ? 'New record' : 'Editing record' }}</span>
+        <h2 id="editor-title">{{ editingId === null ? 'Add a user' : 'Edit user' }}</h2>
+        <p class="editor-copy">{{ editingId === null ? 'Create access for a new member.' : 'Update this member’s directory details.' }}</p>
+        <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+          <label for="username">Username</label>
+          <input id="username" formControlName="username" autocomplete="off" />
+          @if (form.controls.username.invalid && form.controls.username.touched) { <small class="field-error">Enter a username.</small> }
+          <label for="email">Email address</label>
+          <input id="email" type="email" formControlName="email" autocomplete="off" />
+          @if (form.controls.email.invalid && form.controls.email.touched) { <small class="field-error">Enter a valid email address.</small> }
+          <label for="job-role">Job role</label>
+          <select id="job-role" formControlName="jobRole"><option value="tech">Tech</option><option value="id">ID</option><option value="gd">GD</option><option value="qa">QA</option></select>
+          <div class="form-actions"><button mat-flat-button class="save-button" type="submit" [disabled]="saving$ | async">{{ editingId === null ? 'Add user' : 'Save changes' }}</button>@if (editingId !== null) { <button mat-button type="button" (click)="resetForm()">Cancel</button> }</div>
+        </form>
+      </aside>
+    </div>
+  </section>
+</main>

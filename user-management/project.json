@@ -1,0 +1,80 @@
+{
+  "name": "user-management",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "user-management/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@angular/build:application",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/user-management",
+        "browser": "user-management/src/main.ts",
+        "tsConfig": "user-management/tsconfig.app.json",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "user-management/public"
+          }
+        ],
+        "styles": [
+          "user-management/src/material-theme.scss",
+          "user-management/src/styles.css"
+        ]
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "4kb",
+              "maximumError": "8kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      }
+    },
+    "serve": {
+      "continuous": true,
+      "executor": "@angular/build:dev-server",
+      "defaultConfiguration": "development",
+      "configurations": {
+        "production": {
+          "buildTarget": "user-management:build:production"
+        },
+        "development": {
+          "buildTarget": "user-management:build:development"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "serve-static": {
+      "continuous": true,
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "user-management:build",
+        "port": 4200,
+        "staticFilePath": "dist/user-management/browser",
+        "spa": true
+      }
+    }
+  }
+}
